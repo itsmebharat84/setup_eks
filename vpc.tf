@@ -14,9 +14,8 @@ resource "aws_vpc" "setup-eks-vpc" {
 }
 */
 
-
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws//examples/complete-vpc"
+  source  = "terraform-aws-modules/vpc/aws"
   version = "3.14.4"
 
   name       = var.name
