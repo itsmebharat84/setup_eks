@@ -1,13 +1,3 @@
-locals {
-  tags = {
-    Owner       = "TFE"
-    Environment = "dev"
-    Name        = "setup-eks"
-  }
-}
-
-
-
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.14.4"
@@ -35,7 +25,7 @@ module "vpc" {
 
   private_subnet_tags = {
     "kubernetes.io/cluster/${var.name}" = "shared"
-    "kubernetes.io/role/internal-elb"     = 1
+    "kubernetes.io/role/internal-elb"   = 1
   }
 
   tags = local.tags
