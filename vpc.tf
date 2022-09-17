@@ -6,6 +6,17 @@ locals {
   }
 }
 
+resource "aws_vpc" "setup_eks" {
+  cidr_block           = "10.17.0.0/24"
+  enable_dns_hostnames = "false"
+  enable_dns_support   = "false"
+
+
+
+  tags = local.tags
+}
+
+/*
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.14.4"
@@ -23,3 +34,4 @@ module "vpc" {
 
   tags = local.tags
 }
+*/
