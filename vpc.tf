@@ -11,9 +11,38 @@ resource "aws_vpc" "setup_eks" {
   enable_dns_hostnames = "false"
   enable_dns_support   = "false"
 
-
-
   tags = local.tags
+}
+
+resource "aws_subnet" "private_subnet1" {
+  vpc_id     = aws_vpc.setup_eks
+  cidr_block = "10.17.0.0/27"
+  tags       = local.tags
+}
+resource "aws_subnet" "private_subnet2" {
+  vpc_id     = aws_vpc.setup_eks
+  cidr_block = "10.17.0.32/27"
+  tags       = local.tags
+}
+resource "aws_subnet" "private_subnet3" {
+  vpc_id     = aws_vpc.setup_eks
+  cidr_block = "10.17.0.64/27"
+  tags       = local.tags
+}
+resource "aws_subnet" "public_subnet1" {
+  vpc_id     = aws_vpc.setup_eks
+  cidr_block = "10.17.0.128/27"
+  tags       = local.tags
+}
+resource "aws_subnet" "public_subnet2" {
+  vpc_id     = aws_vpc.setup_eks
+  cidr_block = "10.17.0.160/27"
+  tags       = local.tags
+}
+resource "aws_subnet" "public_subnet3" {
+  vpc_id     = aws_vpc.setup_eks
+  cidr_block = "10.17.0.192/27"
+  tags       = local.tags
 }
 
 /*
