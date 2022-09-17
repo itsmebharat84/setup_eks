@@ -15,34 +15,52 @@ resource "aws_vpc" "setup_eks" {
 }
 
 resource "aws_subnet" "private_subnet1" {
-  vpc_id     = aws_vpc.setup_eks.id
-  cidr_block = "10.17.0.0/27"
-  tags       = local.tags
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = "10.17.0.0/27"
+  availability_zone       = "${var.aws_region}a"
+  map_public_ip_on_launch = "false"
+
+  tags = local.tags
 }
 resource "aws_subnet" "private_subnet2" {
-  vpc_id     = aws_vpc.setup_eks.id
-  cidr_block = "10.17.0.32/27"
-  tags       = local.tags
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = "10.17.0.32/27"
+  availability_zone       = "${var.aws_region}b"
+  map_public_ip_on_launch = "false"
+
+  tags = local.tags
 }
 resource "aws_subnet" "private_subnet3" {
-  vpc_id     = aws_vpc.setup_eks.id
-  cidr_block = "10.17.0.64/27"
-  tags       = local.tags
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = "10.17.0.64/27"
+  availability_zone       = "${var.aws_region}c"
+  map_public_ip_on_launch = "false"
+
+  tags = local.tags
 }
 resource "aws_subnet" "public_subnet1" {
-  vpc_id     = aws_vpc.setup_eks.id
-  cidr_block = "10.17.0.128/27"
-  tags       = local.tags
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = "10.17.0.128/27"
+  availability_zone       = "${var.aws_region}a"
+  map_public_ip_on_launch = "true"
+
+  tags = local.tags
 }
 resource "aws_subnet" "public_subnet2" {
-  vpc_id     = aws_vpc.setup_eks.id
-  cidr_block = "10.17.0.160/27"
-  tags       = local.tags
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = "10.17.0.160/27"
+  availability_zone       = "${var.aws_region}b"
+  map_public_ip_on_launch = "true"
+
+  tags = local.tags
 }
 resource "aws_subnet" "public_subnet3" {
-  vpc_id     = aws_vpc.setup_eks.id
-  cidr_block = "10.17.0.192/27"
-  tags       = local.tags
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = "10.17.0.192/27"
+  availability_zone       = "${var.aws_region}c"
+  map_public_ip_on_launch = "true"
+
+  tags = local.tags
 }
 
 /*
