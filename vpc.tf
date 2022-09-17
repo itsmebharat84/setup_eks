@@ -17,10 +17,9 @@ module "vpc" {
   private_subnets = ["10.17.0.0/27", "10.17.0.32/27", "10.17.0.64/27"]
   public_subnets  = ["10.17.0.128/27", "10.17.0.160/27", "10.17.0.192/27"]
 
-  enable_dns_support               = "false"
-  enable_nat_gateway               = "false"
-  single_nat_gateway               = "false"
-  assign_generated_ipv6_cidr_block = "false"
+  enable_dns_support = "false"
+  enable_nat_gateway = "false"
+  single_nat_gateway = "false"
 
   tags = local.tags
 }
