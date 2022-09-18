@@ -1,3 +1,4 @@
+/*
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "18.29.0"
@@ -11,4 +12,4 @@ module "eks" {
   control_plane_subnet_ids = module.vpc.intra_subnets
 
   tags = local.tags
-}
+}*/
