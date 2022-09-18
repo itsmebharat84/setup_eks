@@ -14,7 +14,7 @@ variable "name" {
 }
 
 variable "vpc_cidr" {
-  type    = "String"
+  type    = string
   default = "10.17.0.0/24"
 }
 
