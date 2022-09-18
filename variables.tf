@@ -12,3 +12,18 @@ variable "name" {
   type    = string
   default = "setup-eks"
 }
+
+variable "vpc_cidr" {
+  type    = "String"
+  default = "10.17.0.0/24"
+}
+
+variable "az_count" {
+  type    = number
+  default = 3
+}
+
+variable "subnet_cidr_bits" {
+  type    = number
+  default = 5
+}

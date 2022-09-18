@@ -1,3 +1,47 @@
+resource "aws_vpc" "setup_eks" {
+  cidr_block = var.vpc_cidr
+
+  enable_dns_hostnames = "true"
+  enable_dns_support   = "true"
+
+  tags = {
+    Name                                        = "${var.name}-vpc",
+    "kubernetes.io/cluster/${var.name}-cluster" = "shared"
+  }
+}
+
+resource "aws_subnet" "private_subnet" {
+  count = var.az_count
+
+  vpc_id                  = aws_vpc.setup_eks.id
+  cidr_block              = cidrsubnet(var.vpc_cidr, var.subnet_cidr_bits, count.index + var.az_count)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
+  map_public_ip_on_launch = "false"
+
+  tags = {
+    Name                                        = "${var.name}-private-sg"
+    "kubernetes.io/cluster/${var.name}-cluster" = "shared"
+    "kubernetes.io/role/internal-elb"           = 1
+  }
+}
+
+resource "aws_subnet" "public_subnet" {
+  count = var.az_count
+
+  vpc_id            = aws_vpc.setup_eks.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, var.subnet_cidr_bits, count.index)
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+
+  map_public_ip_on_launch = "true"
+
+  tags = {
+    Name                                        = "${var.name}-public-sg"
+    "kubernetes.io/cluster/${var.name}-cluster" = "shared"
+    "kubernetes.io/role/elb"                    = 1
+  }
+}
+
+/*
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.14.4"
@@ -29,64 +73,4 @@ module "vpc" {
   }
 
   tags = local.tags
-}
-
-
-/*
-resource "aws_vpc" "setup_eks" {
-  cidr_block           = "10.17.0.0/24"
-  enable_dns_hostnames = "false"
-  enable_dns_support   = "false"
-
-  tags = local.tags
-}
-
-resource "aws_subnet" "private_subnet1" {
-  vpc_id                  = aws_vpc.setup_eks.id
-  cidr_block              = "10.17.0.0/27"
-  availability_zone       = "${var.aws_region}a"
-  map_public_ip_on_launch = "false"
-
-  tags = local.tags
-}
-resource "aws_subnet" "private_subnet2" {
-  vpc_id                  = aws_vpc.setup_eks.id
-  cidr_block              = "10.17.0.32/27"
-  availability_zone       = "${var.aws_region}b"
-  map_public_ip_on_launch = "false"
-
-  tags = local.tags
-}
-resource "aws_subnet" "private_subnet3" {
-  vpc_id                  = aws_vpc.setup_eks.id
-  cidr_block              = "10.17.0.64/27"
-  availability_zone       = "${var.aws_region}c"
-  map_public_ip_on_launch = "false"
-
-  tags = local.tags
-}
-resource "aws_subnet" "public_subnet1" {
-  vpc_id                  = aws_vpc.setup_eks.id
-  cidr_block              = "10.17.0.128/27"
-  availability_zone       = "${var.aws_region}a"
-  map_public_ip_on_launch = "true"
-
-  tags = local.tags
-}
-resource "aws_subnet" "public_subnet2" {
-  vpc_id                  = aws_vpc.setup_eks.id
-  cidr_block              = "10.17.0.160/27"
-  availability_zone       = "${var.aws_region}b"
-  map_public_ip_on_launch = "true"
-
-  tags = local.tags
-}
-resource "aws_subnet" "public_subnet3" {
-  vpc_id                  = aws_vpc.setup_eks.id
-  cidr_block              = "10.17.0.192/27"
-  availability_zone       = "${var.aws_region}c"
-  map_public_ip_on_launch = "true"
-
-  tags = local.tags
-}
-*/
+}*/
