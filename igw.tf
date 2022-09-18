@@ -28,6 +28,6 @@ resource "aws_route_table" "main" {
 resource "aws_route_table_association" "internet_access" {
   count = var.az_count
 
-  subnet_id      = aws-subnet.public_subnet[count.index].id
+  subnet_id      = aws_subnet.public_subnet[count.index].id
   route_table_id = aws_route_table.main.id
 }
