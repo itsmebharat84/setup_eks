@@ -15,7 +15,7 @@ variable "name" {
 
 variable "vpc_cidr" {
   type    = string
-  default = "10.17.0.0/24"
+  default = "10.0.0.0/16"
 }
 
 variable "az_count" {
@@ -25,5 +25,5 @@ variable "az_count" {
 
 variable "subnet_cidr_bits" {
   type    = number
-  default = 5
+  default = 8
 }
